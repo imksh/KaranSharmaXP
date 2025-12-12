@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+.move {
+  animation: moveAnimate 1s infinite;
+}
+
+@keyframes moveAnimate {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.wallpaper {
+  background-image: url("/images/wallpaper.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+.blue-gradient {
+  background-image: linear-gradient(
+    to right,
+    #0b68f2,
+    #007df7,
+    #008ff6,
+    #009ff2,
+    #12aeeb
+  );
+}
+
+.white-gradient {
+  background-image: linear-gradient(
+    to right,
+    #f5f5f5,
+    #ececf3,
+    #e0e4f1,
+    #d1dcef,
+    #c1d5ec
+  );
+}
+
+.blue-gradient-down {
+  background-image: linear-gradient(
+    to bottom,
+    #6c85f9,
+    #637bf1,
+    #5b71ea,
+    #5368e2,
+    #4a5eda
+  );
+}
+
+.blue-gradient2 {
+  background-image: linear-gradient(
+    to right bottom,
+    #4a5eda,
+    #4b5fd7,
+    #4c5fd3,
+    #4d60d0,
+    #4e60cc
+  );
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+
+.transparent:hover {
+  background-color: #3b83f664;
+}
+.transparent-gray {
+  background-color: rgba(167, 167, 167, 0.298);
+}
+.transparent-gray-hover:hover {
+  background-color: rgba(195, 195, 195, 0.28);
+}
+
+.header {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);        
+  -webkit-backdrop-filter: blur(10px);  
+}
+
+.fade-right:hover {
+  -webkit-mask-image: linear-gradient(to right, black 0%, transparent 100%);
+  mask-image: linear-gradient(to right, black 0%, transparent 100%);
+}
+
+.fade {
+  -webkit-mask-image: linear-gradient(to right, black 70%, transparent 100%);
+  mask-image: linear-gradient(to right, black 70%, transparent 100%);
+}

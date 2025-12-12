@@ -1,0 +1,34 @@
+[
+  {
+    "title": "Karan Sharma XP",
+    "desc": "Threadly is a minimal social platform where users can sign up, create posts, explore public content, and connect with others.",
+    "tech": "React",
+    "img": ["/images/projects/os1.png","/images/projects/os2.png"],
+    "link": "https://imksh-threadly.netlify.app/",
+    "type": "web"
+  },
+  {
+    "title": "Threadly",
+    "desc": "Threadly is a minimal social platform where users can sign up, create posts, explore public content, and connect with others.",
+    "tech": "React, Spring Boot, MongoDB",
+    "img": ["/images/projects/threadly1.png"],
+    "link": "https://imksh-threadly.netlify.app/",
+    "type": "web"
+  },
+  {
+    "title": "CropMateAI",
+    "desc": "CropMateAI is an AI-powered system that predicts the optimal harvest time for crops by analyzing climatic and soil data.",
+    "tech": "React, Python and Scikit-learn, Flask",
+    "img": ["/images/projects/cropmate1.png"],
+    "link": "https://cropmateai.netlify.app/",
+    "type": "web"
+  },
+  {
+    "title": "PortFolio",
+    "desc": "Portfolio Website showcasing my skills, projects, and professional journey. Designed to highlight creativity, experience, and passion for building impactful solutions.",
+    "tech": "React, Css",
+    "img": ["/images/projects/portfolio1.png"],
+    "link": "https://imksh-portfolio.netlify.app/",
+    "type": "web"
+  }
+]
