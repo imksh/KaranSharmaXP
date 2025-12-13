@@ -69,7 +69,7 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="w-full min-h-[30dvh] lg:w-[50%]">
+          <div className="w-full h-[30dvh] lg:h-auto lg:w-[50%]">
             <button
               className="lg:ml-[20%] flex mx-auto lg:mx-0 items-center px-4 py-2 rounded gap-5 cursor-pointer hover:bg-blue-600 lg:w-[60%] fade-right"
               onClick={() => {
