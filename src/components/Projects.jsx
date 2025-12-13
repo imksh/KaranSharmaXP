@@ -16,18 +16,20 @@ import { IoVideocamOutline } from "react-icons/io5";
 import { FaMobileAlt } from "react-icons/fa";
 import YTHome from "./YTHome";
 import YTProject from "./YTProject";
+import useGlobalStore from "../store/useGlobalStore";
 
-const Projects = ({
-  setShow,
-  apps,
-  handleClose,
-  handleRecent,
-  setShowProjects,
-  setLink,
-  setName,
-  setImage,
-  setAlert,
-}) => {
+const Projects = () => {
+  const {
+    apps,
+    setShowProjects,
+    setAlert,
+    setName,
+    setLink,
+    setImage,
+    handleRecent,
+    handleClose,
+  } = useGlobalStore();
+
   const [z, setZ] = useState(0);
   const [full, setFull] = useState(false);
   const [top, setTop] = useState("15");
@@ -38,6 +40,7 @@ const Projects = ({
   const [height, setHeight] = useState(0);
   const parentRef = useRef(null);
   const [screen, setScreen] = useState("");
+  const windowsWidth = window.innerWidth;
 
   useEffect(() => {
     if (divRef.current) {
@@ -64,7 +67,7 @@ const Projects = ({
       className={`absolute ${
         full
           ? "top-0 left-0 w-full h-full"
-          : "top-[8%] left-[35%] w-[60%] h-[80vh]"
+          : "w-full h-[95dvh]  top-0 left-0 lg:top-[8%] lg:left-[35%] lg:w-[60%] lg:h-[80vh]"
       }  min-w-[60%] rounded  flex flex-col overflow-hidden`}
       style={{ backgroundColor: "#ebe9d6", zIndex: z }}
       onClick={(e) => {
@@ -83,7 +86,7 @@ const Projects = ({
         <div className="flex gap-1">
           <button
             className=" hover:bg-green-600 p-1 border border-white rounded text-white cursor-pointer"
-            onClick={() => setShow(false)}
+            onClick={() => setShowProjects(false)}
           >
             <LuMinus />
           </button>
@@ -97,7 +100,7 @@ const Projects = ({
             className="bg-red-500 hover:bg-red-600 p-1 border border-white rounded text-white cursor-pointer"
             onClick={(e) => {
               e.stopPropagation();
-              setShow(false);
+              setShowProjects(false);
               handleClose("My Projects");
             }}
           >
@@ -141,7 +144,7 @@ const Projects = ({
             Forward
           </button>
         </div>
-        <div className="flex min-w-[220px] justify-between">
+        {/* <div className="flex min-w-[220px] justify-between">
           <button className="flex gap-1 items-center pr-2 text-[12px] cursor-pointer hover:border-2 hover:border-gray-500 rounded">
             <img src="/images/explorer.png" alt="" className="w-8" />
             My Projects
@@ -150,7 +153,7 @@ const Projects = ({
             <img src="/images/pdf.png" alt="" className="w-6" />
             My Resume
           </button>
-        </div>
+        </div> */}
       </div>
 
       <div className="flex items-center py-2 border border-gray-300">
@@ -171,18 +174,18 @@ const Projects = ({
         className="bg-black w-full h-full text-white relative  hide-scrollbar"
         ref={parentRef}
       >
-        <div className=" flex h-[70px] items-center  justify-between p-3 border-b border-b-gray-400 absolute top-0 left-0 w-full header">
+        <div className=" flex h-[70px] items-center  justify-between px-2 lg:p-3 border-b border-b-gray-400 absolute top-0 left-0 w-full header">
           <div className="overflow-hidden flex items-center gap-2 ">
             <img
               src="/images/yt1.png"
               alt=""
-              className="w-20 h-10 object-cover rounded-[20px] "
+              className="w-16 h-8 lg:w-20 lg:h-10 object-cover rounded-2xl lg:rounded-[20px] "
             />
-            <h2 className="text-2xl font-bold">My Projects</h2>
+            <h2 className="lg:text-2xl font-bold">My Projects</h2>
           </div>
           <div
-            className={`flex items-center absolute left-[50%] -translate-x-[50%] ${
-              width > 1000 ? "w-[25%]" : ""
+            className={`hidden lg:flex items-center absolute left-[50%] -translate-x-[50%] ${
+              width > 1000 ? "lg:w-[25%]" : ""
             }`}
           >
             <input
@@ -207,7 +210,9 @@ const Projects = ({
                 setAlert(true);
               }}
             >
-              <FaLinkedin />
+              <FaLinkedin
+                className={`${windowsWidth < 400 ? "text-2xl" : ""}`}
+              />
             </button>
             <button
               className="flex gap-1.5 cursor-pointer items-center"
@@ -218,7 +223,7 @@ const Projects = ({
                 setAlert(true);
               }}
             >
-              <FaGithub />
+              <FaGithub className={`${windowsWidth < 400 ? "text-2xl" : ""}`} />
             </button>
             <button
               className="flex gap-1.5 cursor-pointer items-center"
@@ -229,12 +234,18 @@ const Projects = ({
                 setAlert(true);
               }}
             >
-              <FaInstagramSquare />
+              <FaInstagramSquare
+                className={`${windowsWidth < 400 ? "text-2xl" : ""}`}
+              />
             </button>
           </div>
         </div>
         <div className="pt-[70px] flex h-full ">
-          <div className="w-[20%] max-w-[200px] flex-1 flex flex-col pr-4 border-r border-gray-600 gap-2 py-2">
+          <div
+            className={`w-[35%] lg:w-[20%] max-w-[200px] ${
+              screen !== "" && windowsWidth < 400 ? "hidden" : "flex"
+            } flex-1 flex-col pr-2 lg:pr-4 border-r border-gray-600 gap-2 py-2`}
+          >
             <div className="flex w-full gap-2 ">
               <div
                 className={`w-[5px] h-full ${

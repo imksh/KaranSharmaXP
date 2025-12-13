@@ -20,6 +20,13 @@
   background-repeat: no-repeat;
   min-height: 100vh;
 }
+.wallpaper-small {
+  background-image: url("/images/bgSmall.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100dvh;
+}
 .blue-gradient {
   background-image: linear-gradient(
     to right,

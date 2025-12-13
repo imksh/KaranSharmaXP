@@ -1,13 +1,15 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import useGlobalStore from "../store/useGlobalStore";
 
 const Loading = () => {
   const loaderRef = useRef(null);
   const loaderDivRef = useRef(null);
   const navigate = useNavigate();
   const audio = new Audio("/sounds/loading.mp3");
+  const { vol } = useGlobalStore();
   useEffect(() => {
-    audio.play();
+    if (vol) audio.play();
   }, []);
 
   useEffect(() => {
@@ -30,16 +32,16 @@ const Loading = () => {
   }, []);
 
   return (
-    <div className="bg-black min-h-screen text-white flex justify-center items-center  flex-col relative">
+    <div className="bg-black min-h-dvh text-white flex justify-center items-center  flex-col relative">
       <div className="flex flex-col w-fit">
         <img
           src="/images/xp.png"
           alt="Windows xp logo"
-          className="w-24 ml-auto"
+          className="w-16 lg:w-24 ml-auto"
         />
         <h1 className="relative">
-          <span className="font-extrabold text-5xl">Karan Sharma</span>
-          <span className="text-red-500 absolute text-2xl -top-1 font-bold">
+          <span className=" lg:font-extrabold text-4xl lg:text-5xl">Karan Sharma</span>
+          <span className="text-red-500 absolute lg:text-2xl -top-1 lg:font-bold">
             XP
           </span>
         </h1>
@@ -54,6 +56,9 @@ const Loading = () => {
             <div className="h-2 w-2 bg-blue-500"></div>
           </div>
         </div>
+      </div>
+      <div className="flex lg:hidden px-5 mt-10 text-center">
+        <p><span className="text-red-500">XP</span> works best on a laptop or desktop. You’re currently on a phone.</p>
       </div>
     </div>
   );

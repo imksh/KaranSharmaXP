@@ -5,19 +5,16 @@ import { LuMinus } from "react-icons/lu";
 import { IoArrowBackCircle, IoArrowForwardCircleSharp } from "react-icons/io5";
 import { FaShareSquare, FaArrowRight } from "react-icons/fa";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import useGlobalStore from "../store/useGlobalStore";
 
-const Resume = ({
-  setShow,
-  apps,
-  handleClose,
-  handleRecent,
-  setShowResume,
-}) => {
+const Resume = () => {
+  const { apps, setShowResume, handleRecent, handleClose } = useGlobalStore();
   const [z, setZ] = useState(0);
   const [full, setFull] = useState(false);
   const [top, setTop] = useState("20");
   const [left, setLeft] = useState("30");
   const [zoom, setZoom] = useState(false);
+
   useEffect(() => {
     const temp = apps.find((i) => i.name === "My Resume");
     setZ(temp?.index || 0);
@@ -27,7 +24,7 @@ const Resume = ({
       className={`absolute ${
         full
           ? "top-0 left-0 w-full h-full"
-          : "top-[13%] left-[18%] w-[40%] h-[80vh]"
+          : "w-full h-[95dvh]  top-0 left-0 lg:top-[13%] lg:left-[18%] lg:w-[40%] lg:h-[80vh]"
       }  min-w-[60%] rounded overflow-hidden flex flex-col`}
       style={{ backgroundColor: "#ebe9d6", zIndex: z }}
       onClick={(e) => {
@@ -43,7 +40,7 @@ const Resume = ({
         <div className="flex gap-1">
           <button
             className=" hover:bg-green-600 p-1 border border-white rounded text-white cursor-pointer"
-            onClick={() => setShow(false)}
+            onClick={() => setShowResume(false)}
           >
             <LuMinus />
           </button>
@@ -57,7 +54,7 @@ const Resume = ({
             className="bg-red-500 hover:bg-red-600 p-1 border border-white rounded text-white cursor-pointer"
             onClick={(e) => {
               e.stopPropagation();
-              setShow(false);
+              setShowResume(false);
               handleClose("My Resume");
             }}
           >
@@ -122,14 +119,14 @@ const Resume = ({
           alt=""
           className={`h-full max-w-[80%] hide-scrollbar  mx-auto ${
             zoom
-              ? `scale-200  cursor-zoom-out ${full ? "mt-64" : "mt-48"}`
+              ? `scale-125 lg:scale-200  cursor-zoom-out ${
+                  full ? "mt-16 lg:mt-72" : "mt-16 lg:mt-52"
+                }`
               : "cursor-zoom-in"
           }`}
           onClick={() => setZoom(!zoom)}
         />
       </div>
-
-      
     </div>
   );
 };

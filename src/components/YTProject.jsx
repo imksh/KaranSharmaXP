@@ -33,10 +33,10 @@ const YTProject = ({ width, screen, setScreen }) => {
         <div
           className={`${
             width > 1000 ? "w-[95%]" : "w-[98%]"
-          } mx-auto mt-4 rounded-2xl flex items-center relative justify-center border border-white h-[400px] `}
+          } mx-auto mt-4 rounded-2xl flex items-center relative justify-center border border-white h-[221px] lg:h-[400px] `}
         >
           <button
-            className={`font-extrabold hover:scale-120  text-gray-300  cursor-pointer absolute z-10 left-10
+            className={`font-extrabold hover:scale-120  text-gray-300  cursor-pointer absolute z-10 left-2 lg:left-10
             `}
             onClick={() => setImg(img <= 0 ? item?.img?.length - 1 : img - 1)}
           >
@@ -45,18 +45,18 @@ const YTProject = ({ width, screen, setScreen }) => {
           <img
             src={item?.img?.at(img)}
             alt=""
-            className="h-[399px] object-cover rounded-2xl"
+            className="lg:h-[399px] object-cover rounded-2xl"
           />
           <button
             className={`font-extrabold mx-auto hover:scale-120 cursor-pointer 
-               absolute z-10 right-10 text-gray-300 
+               absolute z-10 right-2 lg:right-10 text-gray-300 
             `}
             onClick={() => setImg(img >= item?.img?.length - 1 ? 0 : img + 1)}
           >
             <IoIosArrowForward size={35} />
           </button>
         </div>
-        <div className="flex justify-between items-center py-4 px-2 w-[95%] mx-auto relative">
+        <div className="flex justify-between items-center py-4 lg:px-2 w-[95%] mx-auto relative">
           <div className="flex gap-2 items-center">
             <img
               src="/images/karan.jpg"
@@ -64,15 +64,15 @@ const YTProject = ({ width, screen, setScreen }) => {
               className="w-10 h-10 rounded-full"
             />
             <div className=" flex flex-col items-baseline">
-              <p className="text-2xl font-bold">{item.title}</p>
+              <p className="lg:text-2xl font-bold">{item.title}</p>
             </div>
           </div>
 
-          <div className="flex gap-1 absolute  left-[50%] -translate-x-[50%]">
+          <div className="flex gap-1 lg:absolute  lg:left-[50%] lg:-translate-x-[50%]">
             {item?.img?.map((i, indx) => (
               <div
                 key={i}
-                className={`w-4 h-4 rounded-full border border-white ${
+                className={`w-2 h-2 lg:w-4 lg:h-4 rounded-full border border-white ${
                   indx === img ? "bg-red-500" : ""
                 }`}
               ></div>

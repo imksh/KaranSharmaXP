@@ -11,18 +11,19 @@ import { VscVscode } from "react-icons/vsc";
 import { SiIntellijidea } from "react-icons/si";
 import { SiPostman } from "react-icons/si";
 import { IoLogoFigma } from "react-icons/io5";
+import useGlobalStore from '../store/useGlobalStore';
 
-const About = ({
-  setShow,
-  apps,
-  handleClose,
-  handleRecent,
-  setShowAbout,
-  setLink,
-  setName,
-  setImage,
-  setAlert,
-}) => {
+const About = () => {
+  const {
+    apps,
+    setShowAbout,
+    setAlert,
+    setName,
+    setLink,
+    setImage,
+    handleRecent,
+    handleClose,
+  } = useGlobalStore();
   const [z, setZ] = useState(0);
   const [full, setFull] = useState(false);
   const [top, setTop] = useState("10");
@@ -41,12 +42,11 @@ const About = ({
       className={`absolute ${
         full
           ? "top-0 left-0 w-full h-full"
-          : "top-[2%] left-[10%] w-[60%] h-[80vh]"
+          : "w-full h-[95dvh]  top-0 left-0 lg:top-[2%] lg:left-[10%]  lg:w-[60%] lg:h-[80vh]"
       } border border-blue-600  rounded overflow-hidden flex flex-col`}
       style={{ backgroundColor: "#ebe9d6", zIndex: z }}
       onClick={(e) => {
         e.stopPropagation();
-        handleRecent("About Me");
         handleRecent("About Me", "/images/aboutme.png", setShowAbout);
       }}
     >
@@ -58,7 +58,7 @@ const About = ({
         <div className="flex gap-1">
           <button
             className=" hover:bg-green-600 p-1 border border-white rounded text-white cursor-pointer"
-            onClick={() => setShow(false)}
+            onClick={() => setShowAbout(false)}
           >
             <LuMinus />
           </button>
@@ -72,7 +72,7 @@ const About = ({
             className="bg-red-500 hover:bg-red-600 p-1 border border-white rounded text-white cursor-pointer"
             onClick={(e) => {
               e.stopPropagation();
-              setShow(false);
+              setShowAbout(false);
               handleClose("About Me");
             }}
           >
@@ -98,17 +98,10 @@ const About = ({
       <div className=" py-2 flex items-center min-h-14 gap-2">
         <div className="flex items-center gap-1 border-r border-gray-300">
           <button className="flex gap-1 items-center px-2 text-[12px] cursor-pointer">
-            <IoArrowBackCircle
-              className="text-gray-400"
-              size={32}
-            />{" "}
-            Back
+            <IoArrowBackCircle className="text-gray-400" size={32} /> Back
           </button>
           <button className="flex gap-1 items-center px-2 text-[12px] cursor-pointer">
-            <IoArrowForwardCircleSharp
-              className="text-gray-400"
-              size={32}
-            />{" "}
+            <IoArrowForwardCircleSharp className="text-gray-400" size={32} />{" "}
             Forward
           </button>
         </div>
@@ -139,8 +132,8 @@ const About = ({
         <p className="text-gray-400 text-[14px] font-bold mx-4">Go</p>
       </div>
       <div className="flex h-full overflow-auto text-white ">
-        <div className="w-[25%] h-full border-r border-gray-400 flex flex-col items-center blue-gradient-down py-4  gap-4 overflow-auto hide-scrollbar">
-          <div className="w-[80%] ">
+        <div className="w-[40%] lg:w-[25%] h-full border-r border-gray-400 flex flex-col items-center blue-gradient-down py-4  gap-4 overflow-auto hide-scrollbar">
+          <div className="w-[90%] lg:w-[80%] ">
             <button
               className="font-bold blue-gradient w-full text-left px-2 py-1 text-[12px] rounded-t flex justify-between items-center cursor-pointer"
               onClick={() => setSocial(!social)}
@@ -202,7 +195,7 @@ const About = ({
             )}
           </div>
 
-          <div className="w-[80%] ">
+          <div className="w-[90%] lg:w-[80%] ">
             <button
               className="font-bold blue-gradient w-full text-left px-2 py-1 text-[12px] rounded-t flex justify-between items-center cursor-pointer"
               onClick={() => setSkills(!skills)}
@@ -284,7 +277,7 @@ const About = ({
             )}
           </div>
 
-          <div className="w-[80%] ">
+          <div className="w-[90%] lg:w-[80%] ">
             <button
               className="font-bold blue-gradient w-full text-left px-2 py-1 text-[12px] rounded-t flex justify-between items-center cursor-pointer"
               onClick={() => setSoftware(!software)}
@@ -322,14 +315,14 @@ const About = ({
             )}
           </div>
         </div>
-        <div className="w-[75%] min-full blue-gradient2 flex flex-col p-4 overflow-auto hide-scrollbar">
-          <h2 className="font-extrabold text-3xl">About Me</h2>
-          <div className="m-4 flex  gap-8 max-w-[700px]">
+        <div className="w-[60%] lg:w-[75%] min-full blue-gradient2 flex flex-col py-4 lg:p-4 overflow-auto hide-scrollbar">
+          <h2 className="font-extrabold text-3xl mx-auto lg:mx-0">About Me</h2>
+          <div className="m-4 flex flex-col lg:flex-row  gap-8 lg:max-w-[700px]">
             <div>
               <img
                 src="/images/karan.jpg"
                 alt=""
-                className="max-w-[200px] rounded-2xl lg:w-[10vw]"
+                className="max-w-[200px] rounded-2xl w-[150px] lg:w-[10vw]"
               />
             </div>
             <div className="flex flex-col  gap-2">

@@ -6,12 +6,17 @@ import { CiSettings } from "react-icons/ci";
 import { IoMdClose } from "react-icons/io";
 import { BsInfoCircle } from "react-icons/bs";
 import { FaToggleOff, FaToggleOn } from "react-icons/fa6";
+import useGlobalStore from "../store/useGlobalStore";
+import { IoVolumeHighOutline, IoVolumeMuteOutline } from "react-icons/io5";
 
-const Footer = ({ setShowStart, apps, handleClose }) => {
+const Footer = () => {
+  const { apps, showStart, setShowStart, handleClose, vol, setVol } =
+    useGlobalStore();
   const [full, setFull] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const [message, setMessage] = useState(false);
   const defaultSound = new Audio("/sounds/default.mp3");
+  const [about, setAbout] = useState("");
 
   const t = new Date();
   const [time, setTime] = useState(
@@ -32,6 +37,12 @@ const Footer = ({ setShowStart, apps, handleClose }) => {
     }, 1000);
   }, [time]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setAbout("");
+    }, 7000);
+  }, [about]);
+
   function openFullscreen() {
     const elem = document.documentElement;
     if (elem.requestFullscreen) {
@@ -41,7 +52,7 @@ const Footer = ({ setShowStart, apps, handleClose }) => {
     } else if (elem.msRequestFullscreen) {
       elem.msRequestFullscreen();
     }
-    defaultSound.play();
+    if (vol) defaultSound.play();
     setFull(true);
   }
 
@@ -53,7 +64,7 @@ const Footer = ({ setShowStart, apps, handleClose }) => {
     } else if (document.msExitFullscreen) {
       document.msExitFullscreen();
     }
-    defaultSound.play();
+    if (vol) defaultSound.play();
     setFull(false);
   }
 
@@ -63,13 +74,13 @@ const Footer = ({ setShowStart, apps, handleClose }) => {
       onClick={(e) => e.stopPropagation()}
     >
       <button
-        className="flex bg-green-700 h-full items-center w-[10%] pl-3 gap-2 fade cursor-pointer"
-        onClick={() => setShowStart((prev) => !prev)}
+        className="flex bg-green-700 h-full items-center w-[35%] lg:w-[10%] pl-3 gap-2 fade cursor-pointer"
+        onClick={() => setShowStart(!showStart)}
       >
         <img src="/images/xp.png" alt="xp logo" className="w-6 object-cover" />
         <p>Start</p>
       </button>
-      <div className="flex justify-baseline flex-1 ">
+      <div className="hidden lg:flex justify-baseline flex-1 ">
         {apps?.map((item, indx) => (
           <button
             key={indx}
@@ -93,7 +104,15 @@ const Footer = ({ setShowStart, apps, handleClose }) => {
           </button>
         ))}
       </div>
-      <div className="h-full flex items-center bg-blue-500 px-5 gap-3">
+      <div className="h-full flex items-center bg-blue-500 px-2 lg:px-5 gap-3">
+        {about && (
+          <div
+            className=" lg:flex absolute text-center -top-40 -translate-x-[50%] text-[12px] text-black p-3 rounded-2xl"
+            style={{ backgroundColor: "#ebe9d6" }}
+          >
+            {about}
+          </div>
+        )}
         <button
           className="cursor-pointer"
           onMouseEnter={() => {
@@ -104,12 +123,17 @@ const Footer = ({ setShowStart, apps, handleClose }) => {
             setShowInfo(false);
             setMessage("");
           }}
+          onClick={() =>
+            setAbout(
+              "Hi, I’m Karan Sharma. I build web and app projects with a focus on clean design, performance, and practical problem-solving. This XP-style portfolio is a fun experiment to showcase my work."
+            )
+          }
         >
           <BsInfoCircle size={18} />
         </button>
-        {showInfo && (
+        {showInfo && !about && (
           <div
-            className="absolute -top-12 text-[12px] text-black p-3 rounded-2xl"
+            className="hidden lg:flex absolute -top-12 text-[12px] text-black p-3 rounded-2xl"
             style={{ backgroundColor: "#ebe9d6" }}
           >
             {message}
@@ -119,14 +143,21 @@ const Footer = ({ setShowStart, apps, handleClose }) => {
           className="cursor-pointer"
           onMouseEnter={() => {
             setShowInfo(true);
-            setMessage("Security");
+            setMessage(vol ? "Mute Volume" : "Unmute Volume");
           }}
           onMouseLeave={() => {
             setShowInfo(false);
             setMessage("");
           }}
+          onClick={() => {
+            setVol(!vol);
+          }}
         >
-          <CiSettings size={20} />
+          {vol ? (
+            <IoVolumeHighOutline size={20} />
+          ) : (
+            <IoVolumeMuteOutline size={20} />
+          )}
         </button>
 
         {full ? (
@@ -161,7 +192,9 @@ const Footer = ({ setShowStart, apps, handleClose }) => {
           </button>
         )}
 
-        <p className="text-[14px] font-bold min-w-[100px]">{time}</p>
+        <p className="text-[14px] font-bold min-w-[60px] lg:min-w-[100px]">
+          {time}
+        </p>
       </div>
     </div>
   );

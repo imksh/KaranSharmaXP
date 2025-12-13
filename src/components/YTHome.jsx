@@ -4,18 +4,18 @@ import data from "../data/projects.json";
 const YTHome = ({ width, setScreen }) => {
   return (
     <div
-      className={`grid max-w-[80%] mx-auto p-4 gap-4 overflow-auto pb-52 ${
+      className={`flex flex-col lg:grid max-w-[80%] mx-auto p-4 gap-4 overflow-auto pb-52 ${
         width < "1000" ? "grid-cols-2 " : "grid-cols-3 "
       }`}
     >
       {data.map((item) => (
         <button
-          className="flex flex-col items-baseline rounded-2xl cursor-pointer p-2 hover:bg-neutral-700/50 text-left"
+          className="flex flex-col items-baseline lg:rounded-2xl cursor-pointer p-2 hover:bg-neutral-700/50 text-left"
           onClick={() => {
             setScreen(item.title);
           }}
         >
-          <img src={item.img[0]} alt="" className="w-full rounded-2xl" />
+          <img src={item.img[0]} alt="" className="w-full rounded lg:rounded-2xl" />
           <div className="flex gap-3 items-center pl-1 pt-1 ">
             <img
               src="/images/karan.jpg"

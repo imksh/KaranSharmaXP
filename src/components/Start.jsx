@@ -3,28 +3,32 @@ import { IoKeyOutline } from "react-icons/io5";
 import { GrPowerShutdown } from "react-icons/gr";
 import { FaCaretRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import useGlobalStore from "../store/useGlobalStore";
 
-const Start = ({
-  setShowStart,
-  setShowAbout,
-  setShowResume,
-  setShowProjects,
-  setAlert,
-  setName,
-  setImage,
-  setLink,
-  handleRecent,
-  setWarning,
-  setWarningMsg,
-  setWarningName,
-}) => {
+const Start = () => {
+  const {
+    setShowStart,
+    setShowAbout,
+    setShowProjects,
+    setShowResume,
+    setAlert,
+    setWarning,
+    setWarningName,
+    setWarningMsg,
+    setName,
+    setLink,
+    setImage,
+    handleRecent,
+    vol,
+  } = useGlobalStore();
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const logOff = new Audio("/sounds/off.mp3");
+  const width = window.innerWidth;
 
   return (
     <div
-      className="absolute bottom-10 left-0 w-[30%] rounded overflow-hidden z-99"
+      className="absolute bottom-10 left-0 w-[90%] lg:w-[30%] rounded overflow-hidden z-99"
       onClick={(e) => e.stopPropagation()}
     >
       <button className=" flex items-center p-2 gap-3 cursor-pointer bg-blue-600 text-white w-full">
@@ -89,7 +93,8 @@ const Start = ({
             onClick={(e) => {
               e.stopPropagation();
               setWarning(true);
-              setWarningName("Contacts");
+              setWarningName("Image Viewer");
+              setShowStart(false);
               setWarningMsg(
                 "Image Viewer will be available soon. Thanks for waiting!"
               );
@@ -106,7 +111,8 @@ const Start = ({
             onClick={(e) => {
               e.stopPropagation();
               setWarning(true);
-              setWarningName("Contacts");
+              setWarningName("Media Player");
+              setShowStart(false);
               setWarningMsg(
                 "Media Player will be available soon. Thanks for waiting!"
               );
@@ -123,7 +129,8 @@ const Start = ({
             onClick={(e) => {
               e.stopPropagation();
               setWarning(true);
-              setWarningName("Contacts");
+              setWarningName("Paint");
+              setShowStart(false);
               setWarningMsg(
                 "Paint will be available soon. Thanks for waiting!"
               );
@@ -203,14 +210,17 @@ const Start = ({
             onClick={(e) => {
               e.stopPropagation();
               setWarning(true);
-              setWarningName("Contacts");
+              setWarningName("Command Prompt");
+              setShowStart(false);
               setWarningMsg(
                 "Command Prompt will be available soon. Thanks for waiting!"
               );
             }}
           >
             <img src="/images/terminal.png" alt="" className="w-8" />
-            <h2 className="text-[14px]">Command Prompt</h2>
+            <h2 className="text-[14px]">
+              {width > 400 ? "Command Prompt" : "Commands"}
+            </h2>
           </button>
           {show && (
             <>
@@ -219,7 +229,8 @@ const Start = ({
                 onClick={(e) => {
                   e.stopPropagation();
                   setWarning(true);
-                  setWarningName("Contacts");
+                  setWarningName("Music Player");
+                  setShowStart(false);
                   setWarningMsg(
                     "Music Player will be available soon. Thanks for waiting!"
                   );
@@ -262,7 +273,8 @@ const Start = ({
           className="flex items-center justify-center gap-1"
           onClick={() => {
             navigate("/login");
-            logOff.play();
+            setShowStart(false);
+            if (vol) logOff.play();
           }}
         >
           <div className="bg-yellow-500  border rounded p-1 border-white text-white cursor-pointer">
@@ -272,7 +284,10 @@ const Start = ({
         </button>
         <button
           className="flex items-center justify-center gap-1 cursor-pointer"
-          onClick={() => navigate("/")}
+          onClick={() => {
+            navigate("/");
+            setShowStart(false);
+          }}
         >
           <div className="bg-red-500  border rounded p-1 border-white text-white">
             <GrPowerShutdown size={12} />
