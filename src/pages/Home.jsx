@@ -7,6 +7,7 @@ import Resume from "../components/Resume";
 import Projects from "../components/Projects";
 import Warning from "../components/Warning";
 import useGlobalStore from "../store/useGlobalStore";
+import { toast } from "react-hot-toast";
 
 const Home = () => {
   const {
@@ -51,6 +52,9 @@ const Home = () => {
             setShowAbout(true);
             handleRecent("About Me", "/images/aboutme.png", setShowAbout);
           }}
+          onClick={() => {
+            toast.success("Double Click to open");
+          }}
         >
           <img src="/images/aboutme.png" alt="img" className="w-16" />
           <p className="text-[14px] ">About Me</p>
@@ -60,6 +64,9 @@ const Home = () => {
           onDoubleClick={() => {
             setShowResume(true);
             handleRecent("My Resume", "/images/pdf.png", setShowResume);
+          }}
+          onClick={() => {
+            toast.success("Double Click to open");
           }}
         >
           <img src="/images/pdf.png" alt="img" className="w-16" />
@@ -75,6 +82,9 @@ const Home = () => {
               setShowProjects
             );
           }}
+          onClick={() => {
+            toast.success("Double Click to open");
+          }}
         >
           <img src="/images/explorer.png" alt="img" className="w-16" />
           <p className="text-[14px] ">My Projects</p>
@@ -88,6 +98,9 @@ const Home = () => {
             setWarningMsg(
               "Contact details will be available soon. Thanks for waiting!"
             );
+          }}
+          onClick={() => {
+            toast.success("Double Click to open");
           }}
         >
           <img src="/images/contact.png" alt="img" className="w-16" />

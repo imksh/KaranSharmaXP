@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Footer from "./components/Footer";
 import Loading from './pages/Loading';
 import Login from './pages/Login';
+import {Toaster} from "react-hot-toast"
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
       </Routes>
+      <Toaster />
     </div>
   );
 };
