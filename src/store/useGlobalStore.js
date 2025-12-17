@@ -13,7 +13,21 @@ const useGlobalStore = create((set, get) => ({
   name: "",
   link: "",
   image: "",
+  screenHeight: 0,
+  screenWidth: 0,
   vol: true,
+  isfull: false,
+
+  setIsFull: (val) => {
+    set({ isfull: val });
+  },
+
+  setScreenHeight: (val) => {
+    set({ screenHeight: val });
+  },
+  setScreenWidth: (val) => {
+    set({ screenWidth: val });
+  },
 
   setVol: (val) => {
     set({ vol: val });
@@ -63,7 +77,7 @@ const useGlobalStore = create((set, get) => ({
       name,
       image,
       fun,
-      index: apps.length > 0 ? apps[apps.length - 1].index + 1 : 0,
+      index: apps.length,
     };
 
     let updated;
@@ -74,7 +88,13 @@ const useGlobalStore = create((set, get) => ({
       updated.push(item);
     }
 
-    set({ apps: updated });
+    let updatedRecent = updated.map((i, indx) => {
+      i.index = indx;
+      return i;
+    });
+
+
+    set({ apps: updatedRecent });
   },
 
   handleClose: (name) => {

@@ -10,7 +10,7 @@ import useGlobalStore from "../store/useGlobalStore";
 import { IoVolumeHighOutline, IoVolumeMuteOutline } from "react-icons/io5";
 
 const Footer = () => {
-  const { apps, showStart, setShowStart, handleClose, vol, setVol } =
+  const { apps, showStart, setShowStart, handleClose, vol, setVol, isFull } =
     useGlobalStore();
   const [full, setFull] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
@@ -72,6 +72,7 @@ const Footer = () => {
     <div
       className="fixed bottom-0 left-0 bg-blue-800 w-full h-10 text-white flex items-center justify-between"
       onClick={(e) => e.stopPropagation()}
+      style={isFull ? { zIndex: 120 } : { zIndex: 20 }}
     >
       <button
         className="flex bg-green-700 h-full items-center w-[35%] lg:w-[10%] pl-3 gap-2 fade cursor-pointer"

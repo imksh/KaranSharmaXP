@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { IoMdClose } from "react-icons/io";
 import { TiTabsOutline } from "react-icons/ti";
 import { LuMinus } from "react-icons/lu";
@@ -6,27 +6,60 @@ import { IoArrowBackCircle, IoArrowForwardCircleSharp } from "react-icons/io5";
 import { FaShareSquare, FaArrowRight } from "react-icons/fa";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import useGlobalStore from "../store/useGlobalStore";
+import { motion } from "motion/react";
 
 const Resume = () => {
-  const { apps, setShowResume, handleRecent, handleClose } = useGlobalStore();
+  const {
+    apps,
+    setShowResume,
+    handleRecent,
+    handleClose,
+    screenWidth,
+    screenHeight,
+    setIsFull,
+  } = useGlobalStore();
   const [z, setZ] = useState(0);
   const [full, setFull] = useState(false);
   const [top, setTop] = useState("20");
   const [left, setLeft] = useState("30");
   const [zoom, setZoom] = useState(false);
+  const [size, setSize] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const temp = apps.find((i) => i.name === "My Resume");
     setZ(temp?.index || 0);
   }, [apps]);
+  const divRef1 = useRef(null);
+  useEffect(() => {
+    setSize({
+      x: divRef1?.current?.offsetWidth || 0,
+      y: divRef1?.current?.offsetHeight || 0,
+    });
+  });
   return (
-    <div
+    <motion.div
+      drag={!full}
+      animate={{
+        x: full ? 0 : 300,
+        y: full ? 0 : 50,
+      }}
+      dragConstraints={{
+        left: -100,
+        top: 0,
+        right: screenWidth - size.x * 1.2,
+        bottom: screenHeight - size.y,
+      }}
+      ref={divRef1}
       className={`absolute ${
         full
           ? "top-0 left-0 w-full h-full"
-          : "w-full h-[95dvh]  top-0 left-0 lg:top-[13%] lg:left-[18%] lg:w-[40%] lg:h-[80vh]"
+          : "w-full h-[95dvh]  top-0 left-0 lg:top-[8%] lg:left-[10%] lg:w-[40%] lg:h-[80vh]"
       }  min-w-[60%] rounded overflow-hidden flex flex-col`}
-      style={{ backgroundColor: "#ebe9d6", zIndex: z }}
+      style={
+        full
+          ? { backgroundColor: "#ebe9d6", zIndex: 500 }
+          : { backgroundColor: "#ebe9d6", zIndex: z }
+      }
       onClick={(e) => {
         e.stopPropagation();
         handleRecent("My Resume", "/images/pdf.png", setShowResume);
@@ -40,13 +73,19 @@ const Resume = () => {
         <div className="flex gap-1">
           <button
             className=" hover:bg-green-600 p-1 border border-white rounded text-white cursor-pointer"
-            onClick={() => setShowResume(false)}
+            onClick={() => {
+              setShowResume(false);
+              setIsFull(false);
+            }}
           >
             <LuMinus />
           </button>
           <button
             className=" hover:bg-green-600 p-1 border border-white rounded text-white cursor-pointer"
-            onClick={() => setFull(!full)}
+            onClick={() => {
+              setIsFull(!full);
+              setFull(!full);
+            }}
           >
             <TiTabsOutline />
           </button>
@@ -127,7 +166,7 @@ const Resume = () => {
           onClick={() => setZoom(!zoom)}
         />
       </div>
-    </div>
+    </motion.div>
   );
 };
 

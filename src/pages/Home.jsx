@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Footer from "../components/Footer";
 import Start from "../components/Start";
 import Alert from "../components/Alert";
@@ -27,6 +27,9 @@ const Home = () => {
     setWarningMsg,
     handleRecent,
     vol,
+    setScreenHeight,
+    setScreenWidth,
+    apps,
   } = useGlobalStore();
 
   const audio = new Audio("/sounds/boot.mp3");
@@ -35,9 +38,24 @@ const Home = () => {
     if (vol) audio.play();
   }, []);
 
+  const divRef = useRef(null);
+
+  useEffect(() => {
+    setScreenWidth(divRef?.current?.offsetWidth || 0);
+    setScreenHeight(divRef?.current?.offsetHeight || 0);
+  }, []);
+
+  const handleAlert = (name) => {
+    setTimeout(() => {
+      const flag = apps.find((item) => item.name === name);
+      if (!flag) toast.success("Double Click to open");
+    }, 200);
+  };
+
   return (
     <div
-      className={`min-h-dvh ${
+      ref={divRef}
+      className={`min-h-dvh relative ${
         width < 400 ? "wallpaper-small" : "wallpaper"
       }  relative pb-10 overflow-hidden `}
       onClick={() => {
@@ -52,9 +70,6 @@ const Home = () => {
             setShowAbout(true);
             handleRecent("About Me", "/images/aboutme.png", setShowAbout);
           }}
-          onClick={() => {
-            toast.success("Double Click to open");
-          }}
         >
           <img src="/images/aboutme.png" alt="img" className="w-16" />
           <p className="text-[14px] ">About Me</p>
@@ -64,9 +79,6 @@ const Home = () => {
           onDoubleClick={() => {
             setShowResume(true);
             handleRecent("My Resume", "/images/pdf.png", setShowResume);
-          }}
-          onClick={() => {
-            toast.success("Double Click to open");
           }}
         >
           <img src="/images/pdf.png" alt="img" className="w-16" />
@@ -82,9 +94,6 @@ const Home = () => {
               setShowProjects
             );
           }}
-          onClick={() => {
-            toast.success("Double Click to open");
-          }}
         >
           <img src="/images/explorer.png" alt="img" className="w-16" />
           <p className="text-[14px] ">My Projects</p>
@@ -98,9 +107,6 @@ const Home = () => {
             setWarningMsg(
               "Contact details will be available soon. Thanks for waiting!"
             );
-          }}
-          onClick={() => {
-            toast.success("Double Click to open");
           }}
         >
           <img src="/images/contact.png" alt="img" className="w-16" />

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { IoMdClose } from "react-icons/io";
 import { TiTabsOutline } from "react-icons/ti";
 import { LuMinus } from "react-icons/lu";
@@ -11,7 +11,8 @@ import { VscVscode } from "react-icons/vsc";
 import { SiIntellijidea } from "react-icons/si";
 import { SiPostman } from "react-icons/si";
 import { IoLogoFigma } from "react-icons/io5";
-import useGlobalStore from '../store/useGlobalStore';
+import useGlobalStore from "../store/useGlobalStore";
+import { motion } from "motion/react";
 
 const About = () => {
   const {
@@ -23,6 +24,9 @@ const About = () => {
     setImage,
     handleRecent,
     handleClose,
+    screenHeight,
+    screenWidth,
+    setIsFull,
   } = useGlobalStore();
   const [z, setZ] = useState(0);
   const [full, setFull] = useState(false);
@@ -31,20 +35,46 @@ const About = () => {
   const [social, setSocial] = useState(true);
   const [skills, setSkills] = useState(true);
   const [software, setSoftware] = useState(true);
+  const [size, setSize] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const temp = apps.find((i) => i.name === "About Me");
     setZ(temp?.index || 0);
   }, [apps]);
 
+  const divRef = useRef(null);
+
+  useEffect(() => {
+    setSize({
+      x: divRef?.current?.offsetWidth || 0,
+      y: divRef?.current?.offsetHeight || 0,
+    });
+  });
+
   return (
-    <div
+    <motion.div
+      drag={!full}
+      dragConstraints={{
+        left: -100,
+        top: 0,
+        right: screenWidth - size.x * 1.2,
+        bottom: screenHeight -500,
+      }}
+      animate={{
+        x: full ? 0 : undefined,
+        y: full ? 0 : undefined,
+      }}
+      ref={divRef}
       className={`absolute ${
         full
           ? "top-0 left-0 w-full h-full"
           : "w-full h-[95dvh]  top-0 left-0 lg:top-[2%] lg:left-[10%]  lg:w-[60%] lg:h-[80vh]"
       } border border-blue-600  rounded overflow-hidden flex flex-col`}
-      style={{ backgroundColor: "#ebe9d6", zIndex: z }}
+      style={
+        full
+          ? { backgroundColor: "#ebe9d6", zIndex: 100 }
+          : { backgroundColor: "#ebe9d6", zIndex: z }
+      }
       onClick={(e) => {
         e.stopPropagation();
         handleRecent("About Me", "/images/aboutme.png", setShowAbout);
@@ -58,13 +88,19 @@ const About = () => {
         <div className="flex gap-1">
           <button
             className=" hover:bg-green-600 p-1 border border-white rounded text-white cursor-pointer"
-            onClick={() => setShowAbout(false)}
+            onClick={() => {
+              setShowAbout(false);
+              setIsFull(false);
+            }}
           >
             <LuMinus />
           </button>
           <button
             className=" hover:bg-green-600 p-1 border border-white rounded text-white cursor-pointer"
-            onClick={() => setFull(!full)}
+            onClick={() => {
+              setIsFull(!full);
+              setFull(!full);
+            }}
           >
             <TiTabsOutline />
           </button>
@@ -352,7 +388,7 @@ const About = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

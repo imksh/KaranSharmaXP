@@ -17,6 +17,7 @@ import { FaMobileAlt } from "react-icons/fa";
 import YTHome from "./YTHome";
 import YTProject from "./YTProject";
 import useGlobalStore from "../store/useGlobalStore";
+import { motion } from "motion/react";
 
 const Projects = () => {
   const {
@@ -28,6 +29,9 @@ const Projects = () => {
     setImage,
     handleRecent,
     handleClose,
+    screenWidth,
+    screenHeight,
+    setIsFull,
   } = useGlobalStore();
 
   const [z, setZ] = useState(0);
@@ -41,6 +45,7 @@ const Projects = () => {
   const parentRef = useRef(null);
   const [screen, setScreen] = useState("");
   const windowsWidth = window.innerWidth;
+  const [size, setSize] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     if (divRef.current) {
@@ -62,14 +67,42 @@ const Projects = () => {
     arr[0] = arr[0].toUpperCase();
     return arr.join("");
   };
+
+  const divRef1 = useRef(null);
+  useEffect(() => {
+    setSize({
+      x: divRef1?.current?.offsetWidth || 0,
+      y: divRef1?.current?.offsetHeight || 0,
+    });
+  });
   return (
-    <div
+    <motion.div
+      drag={!full}
+      animate={{
+        x: full ? 0 : 200,
+        y: full ? 0 : undefined,
+      }}
+      dragConstraints={
+        !full
+          ? {
+              left: -100,
+              top: 0,
+              right: screenWidth - size.x * 1.2,
+              bottom: screenHeight -500,
+            }
+          : {}
+      }
+      ref={divRef1}
       className={`absolute ${
         full
           ? "top-0 left-0 w-full h-full"
-          : "w-full h-[95dvh]  top-0 left-0 lg:top-[8%] lg:left-[35%] lg:w-[60%] lg:h-[80vh]"
+          : "w-full h-[95dvh]  top-0 left-0 lg:top-[8%] lg:left-[10%] lg:w-[60%] lg:h-[80vh]"
       }  min-w-[60%] rounded  flex flex-col overflow-hidden`}
-      style={{ backgroundColor: "#ebe9d6", zIndex: z }}
+      style={
+        full
+          ? { backgroundColor: "#ebe9d6", zIndex: 100 }
+          : { backgroundColor: "#ebe9d6", zIndex: z }
+      }
       onClick={(e) => {
         e.stopPropagation();
         handleRecent("My Projects", "/images/explorer.png", setShowProjects);
@@ -86,13 +119,19 @@ const Projects = () => {
         <div className="flex gap-1">
           <button
             className=" hover:bg-green-600 p-1 border border-white rounded text-white cursor-pointer"
-            onClick={() => setShowProjects(false)}
+            onClick={() => {
+              setShowProjects(false);
+              setIsFull(false);
+            }}
           >
             <LuMinus />
           </button>
           <button
             className=" hover:bg-green-600 p-1 border border-white rounded text-white cursor-pointer"
-            onClick={() => setFull(!full)}
+            onClick={() => {
+              setIsFull(!full);
+              setFull(!full);
+            }}
           >
             <TiTabsOutline />
           </button>
@@ -344,7 +383,7 @@ const Projects = () => {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
